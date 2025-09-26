@@ -46,12 +46,12 @@ for house in range(5):
 
 #property 1:
 #every pair meets at least once
-for person1 in range(10):
-	for person2 in range(person1):
-		s.add(Or([And(matrix[time][house][person1], matrix[time][house][person2])
-			for time in range(5)
-				for house in range(5)
-		]))
+#for person1 in range(10):
+#	for person2 in range(person1):
+#		s.add(Or([And(matrix[time][house][person1], matrix[time][house][person2])
+#			for time in range(5)
+#				for house in range(5)
+#		]))
 
 
 #property 2:
@@ -99,6 +99,15 @@ for time in range(5):
 					print(f"\t\tPERSON {person}")
 
 
+c = 0
+for person1 in range(10):
+	for person2 in range(person1):
+		for i in range(25):
+			if m[matrix[i//5][i%5][person1]] and m[matrix[i//5][i%5][person2]]:
+				c += 1
+				break
 
+
+print(f"\n {c} unique pairings")
 
 
