@@ -44,47 +44,47 @@ class BDD:
 			print("BDD IS NOT SATISFIABLE!!!!")
 		print(f"{self.bdd.node_count()} Nodes")
 
-#
-#		self.pairs = set()
-#
-#		for i in range(self.varCount):
-#			for j in range(i):
-#				if (self.bdd & self.vars[i] & self.vars[j]).satisfiable():
-#					self.pairs.add((i, True, j, True))
-#				if (self.bdd & self.vars[i] & ~self.vars[j]).satisfiable():
-#					self.pairs.add((i, True, j, False))
-#				if (self.bdd & ~self.vars[i] & self.vars[j]).satisfiable():
-#					self.pairs.add((i, False, j, True))
-#				if (self.bdd & ~self.vars[i] & ~self.vars[j]).satisfiable():
-#					self.pairs.add((i, False, j, False))
-#			if i % 100 == 0:
-#				self.manager.gc()
-#
-#		print(f"Found {len(self.pairs)} Interaction pairs")
-#
-#
-#		self.cover = []
-#
-#		#greedy cover algorithm
-#		for p in self.pairs:
-#			covered = False
-#			fits = None
-#			for c in self.cover:
-#				if c[p[0]] == p[1] and c[p[2]] == p[3]: #already covered
-#					covered = True
-#					break
-#				elif (c[p[0]] == p[1] or c[p[0]] == None) and (c[p[2]] == p[3] or c[p[3]] == None): #could be covered here
-#					fits = c
-#
-#			if not covered:
-#				if fits == None:
-#					fits = [None for _ in range(self.varCount)]
-#					self.cover.append(fits)
-#
-#				fits[p[0]] = p[1]
-#				fits[p[2]] = p[3]
-#
-#		print(f"Created cover of size {len(self.cover)}")
+
+		self.pairs = set()
+
+		for i in range(self.varCount):
+			for j in range(i):
+				if (self.bdd & self.vars[i] & self.vars[j]).satisfiable():
+					self.pairs.add((i, True, j, True))
+				if (self.bdd & self.vars[i] & ~self.vars[j]).satisfiable():
+					self.pairs.add((i, True, j, False))
+				if (self.bdd & ~self.vars[i] & self.vars[j]).satisfiable():
+					self.pairs.add((i, False, j, True))
+				if (self.bdd & ~self.vars[i] & ~self.vars[j]).satisfiable():
+					self.pairs.add((i, False, j, False))
+			if i % 100 == 0:
+				self.manager.gc()
+
+		print(f"Found {len(self.pairs)} Interaction pairs")
+
+
+		self.cover = []
+
+		#greedy cover algorithm
+		for p in self.pairs:
+			covered = False
+			fits = None
+			for c in self.cover:
+				if c[p[0]] == p[1] and c[p[2]] == p[3]: #already covered
+					covered = True
+					break
+				elif (c[p[0]] == p[1] or c[p[0]] == None) and (c[p[2]] == p[3] or c[p[3]] == None): #could be covered here
+					fits = c
+
+			if not covered:
+				if fits == None:
+					fits = [None for _ in range(self.varCount)]
+					self.cover.append(fits)
+
+				fits[p[0]] = p[1]
+				fits[p[2]] = p[3]
+
+		print(f"Created cover of size {len(self.cover)}")
 
 
 		self.manager.export_dddmp(f"dddmps/{filename}.dddmp", [self.bdd])
